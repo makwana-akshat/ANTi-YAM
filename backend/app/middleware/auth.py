@@ -9,6 +9,10 @@ PUBLIC_PATHS = ["/health", "/version", "/", "/docs", "/openapi.json"]
 
 class AuthenticationMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        # Allow CORS preflight requests to pass through
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         # Allow public paths
         if request.url.path in PUBLIC_PATHS or request.url.path.startswith("/api/v1/public"):
             return await call_next(request)
