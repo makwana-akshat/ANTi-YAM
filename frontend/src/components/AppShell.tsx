@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   MessageSquareHeart, 
@@ -28,6 +28,9 @@ import {
 import { FlowingNavItem } from './FlowingNavItem';
 import { useDataFetch } from '../hooks/useDataFetch';
 import { getUserProfile } from '../api/mockData';
+import { HealthLogModal } from '../features/disease-management/components/HealthLogModal';
+import { useDiseaseStore } from '../features/disease-management/store/useDiseaseStore';
+import { useEffect } from 'react';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
@@ -41,6 +44,27 @@ export function AppShell() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { primaryDisease } = useDiseaseStore();
+
+  useEffect(() => {
+    if (!isLoaded || !user) return;
+
+    if (!primaryDisease && location.pathname !== '/onboarding') {
+      navigate('/onboarding');
+    } else if (primaryDisease && location.pathname === '/onboarding') {
+      navigate('/');
+    }
+  }, [isLoaded, user, primaryDisease, location.pathname, navigate]);
+
+  if (location.pathname === '/onboarding') {
+    return (
+      <div className="h-screen bg-[var(--color-bg-app)] text-[var(--color-text-main)] font-sans overflow-hidden">
+        <Outlet />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-[var(--color-bg-app)] text-[var(--color-text-main)] font-sans overflow-hidden">
@@ -61,9 +85,9 @@ export function AppShell() {
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="flex items-center h-16 px-6 border-b border-[var(--color-border)] lg:border-none">
-          <div className="flex items-center text-xl font-bold text-[var(--color-primary)]">
-            <span className="text-2xl mr-2 text-[var(--color-primary)]">+</span>
-            MediCare +
+          <div className="flex items-center ml-10 text-xl font-bold text-[var(--color-primary)]">
+            
+            ANTi-YAM
           </div>
           <button className="ml-auto lg:hidden" onClick={() => setIsMobileOpen(false)}>
             <X size={20} className="text-[var(--color-text-muted)]" />
@@ -171,6 +195,9 @@ export function AppShell() {
           <Outlet />
         </main>
       </div>
+
+      {/* Global Modals */}
+      <HealthLogModal />
     </div>
   );
 }

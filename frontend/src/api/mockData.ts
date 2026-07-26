@@ -9,35 +9,39 @@ import type {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const getDashboardStats = async (): Promise<DashboardStats> => {
+export const getDashboardStats = async (dateStr?: string): Promise<DashboardStats> => {
   await delay(800);
+  
+  // Simulate historical data if date is changed
+  const isPast = dateStr && dateStr !== '2025-05-24';
+  
   return {
     healthScore: {
       label: 'Health Score',
-      value: 82,
+      value: isPast ? 75 + Math.floor(Math.random() * 10) : 82,
       unit: '/100',
       status: 'Good',
       trend: [{ date: 'Mon', value: 78 }, { date: 'Tue', value: 80 }, { date: 'Wed', value: 82 }]
     },
     bloodPressure: {
       label: 'Blood Pressure',
-      value: '120/80',
+      value: isPast ? `${115 + Math.floor(Math.random() * 10)}/${75 + Math.floor(Math.random() * 10)}` : '120/80',
       unit: 'mmHg',
       status: 'Normal',
       trend: [{ date: 'Mon', value: 118 }, { date: 'Tue', value: 120 }, { date: 'Wed', value: 120 }]
     },
     bloodSugar: {
       label: 'Blood Sugar',
-      value: 98,
+      value: isPast ? 95 + Math.floor(Math.random() * 20) : 98,
       unit: 'mg/dL',
       status: 'Normal',
       trend: [{ date: 'Mon', value: 102 }, { date: 'Tue', value: 95 }, { date: 'Wed', value: 98 }]
     },
     adherence: {
       label: 'Medication Adherence',
-      value: 92,
+      value: isPast ? 70 + Math.floor(Math.random() * 30) : 92,
       unit: '%',
-      status: 'On Track',
+      status: isPast ? 'Needs Attention' : 'On Track',
       trend: [{ date: 'Mon', value: 80 }, { date: 'Tue', value: 90 }, { date: 'Wed', value: 92 }]
     },
     nextReminder: {

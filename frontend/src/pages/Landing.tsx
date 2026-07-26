@@ -17,7 +17,7 @@ export function Landing() {
       <header className="h-20 flex items-center px-8 border-b border-[var(--color-border)] bg-white">
         <div className="flex items-center text-2xl font-bold text-[var(--color-primary)]">
           <span className="text-3xl mr-2 text-[var(--color-primary)]">+</span>
-          MediCare +
+          ANTi-YAM
         </div>
         <div className="ml-auto flex space-x-4">
           <Link to="/">

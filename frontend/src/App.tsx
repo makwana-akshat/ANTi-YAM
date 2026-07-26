@@ -11,6 +11,7 @@ import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
 import { Landing } from './pages/Landing';
 import { Premium } from './pages/Premium';
+import Onboarding from './pages/Onboarding';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
           <Route path="premium" element={<Premium />} />
+          <Route path="onboarding" element={<Onboarding />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,68 @@
+{
+  "title": "Daily Hypertension Log",
+  "sections": [
+    {
+      "title": "Blood Pressure Readings",
+      "fields": [
+        {
+          "id": "systolic",
+          "label": "Systolic (Top number)",
+          "component": "number_input",
+          "icon": "Heart",
+          "placeholder": "e.g. 120"
+        },
+        {
+          "id": "diastolic",
+          "label": "Diastolic (Bottom number)",
+          "component": "number_input",
+          "icon": "Activity",
+          "placeholder": "e.g. 80"
+        },
+        {
+          "id": "heartRate",
+          "label": "Heart Rate (bpm)",
+          "component": "number_input",
+          "icon": "HeartPulse",
+          "placeholder": "e.g. 72"
+        }
+      ]
+    },
+    {
+      "title": "Daily Factors",
+      "fields": [
+        {
+          "id": "medicationTaken",
+          "label": "Took BP Medication Today?",
+          "component": "switch",
+          "icon": "Pill"
+        },
+        {
+          "id": "sodiumIntake",
+          "label": "Sodium Intake Level",
+          "component": "dropdown",
+          "icon": "Utensils",
+          "options": [
+            { "label": "Low (Good)", "value": "low" },
+            { "label": "Moderate", "value": "moderate" },
+            { "label": "High", "value": "high" }
+          ]
+        },
+        {
+          "id": "stressLevel",
+          "label": "Stress Level",
+          "component": "slider",
+          "icon": "Brain",
+          "min": 1,
+          "max": 10,
+          "step": 1
+        },
+        {
+          "id": "notes",
+          "label": "Additional Notes",
+          "component": "textarea",
+          "icon": "FileText"
+        }
+      ]
+    }
+  ]
+}
