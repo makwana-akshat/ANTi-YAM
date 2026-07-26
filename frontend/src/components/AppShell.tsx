@@ -12,8 +12,10 @@ import {
   Search,
   ChevronDown,
   Menu,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
+import { useClerk, useUser } from '@clerk/clerk-react';
 import { Button, Card } from './ui';
 import { 
   DropdownMenu, 
@@ -37,7 +39,8 @@ const navItems = [
 
 export function AppShell() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const { data: profile } = useDataFetch(getUserProfile);
+  const { user, isLoaded } = useUser();
+  const { signOut } = useClerk();
 
   return (
     <div className="flex h-screen bg-[var(--color-bg-app)] text-[var(--color-text-main)] font-sans overflow-hidden">
@@ -114,15 +117,22 @@ export function AppShell() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="flex items-center cursor-pointer outline-none">
-                  {profile ? (
-                    <img src={profile.avatar} alt="Profile" className="w-8 h-8 rounded-full bg-slate-200" />
+                  {isLoaded && user ? (
+                    <img src={user.imageUrl} alt="Profile" className="w-8 h-8 rounded-full bg-slate-200 object-cover" />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-slate-200 animate-pulse" />
                   )}
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 mt-2">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{user?.fullName || 'My Account'}</p>
+                    <p className="text-xs leading-none text-slate-500">
+                      {user?.primaryEmailAddress?.emailAddress}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="flex w-full items-center">
@@ -142,6 +152,14 @@ export function AppShell() {
                     <FileText className="mr-2 h-4 w-4" />
                     <span>Terms & Conditions</span>
                   </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={() => signOut({ redirectUrl: '/' })} 
+                  className="flex w-full items-center text-red-600 focus:text-red-700 cursor-pointer focus:bg-red-50"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
