@@ -15,6 +15,14 @@ import {
   X
 } from 'lucide-react';
 import { Button, Card } from './ui';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from './ui/DropdownMenu';
 import { FlowingNavItem } from './FlowingNavItem';
 import { useDataFetch } from '../hooks/useDataFetch';
 import { getUserProfile } from '../api/mockData';
@@ -25,8 +33,6 @@ const navItems = [
   { icon: Activity, label: 'Health Logs', path: '/logs' },
   { icon: FileText, label: 'Reports', path: '/reports' },
   { icon: MapPin, label: 'Nearby Hospitals', path: '/hospitals' },
-  { icon: User, label: 'Profile', path: '/profile' },
-  { icon: Settings, label: 'Settings', path: '/settings' },
 ];
 
 export function AppShell() {
@@ -73,43 +79,6 @@ export function AppShell() {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-[var(--color-border)]">
-          <Card className="p-4 bg-blue-50/50 border-blue-100 mb-4 shadow-none">
-            <div className="flex items-center text-[var(--color-primary)] font-semibold mb-1">
-              <span className="w-5 h-5 rounded-full border border-current flex items-center justify-center mr-2 text-xs text-white bg-[var(--color-primary)]">
-                ✓
-              </span>
-              Upgrade to Premium
-            </div>
-            <p className="text-xs text-[var(--color-text-muted)] mb-3">
-              Unlock advanced insights and priority support.
-            </p>
-            <Link to="/premium" onClick={() => setIsMobileOpen(false)}>
-              <Button className="w-full text-sm">Upgrade Now</Button>
-            </Link>
-          </Card>
-
-          <div className="flex items-center px-2">
-            {profile ? (
-              <>
-                <img src={profile.avatar} alt={profile.name} className="w-10 h-10 rounded-full bg-slate-200" />
-                <div className="ml-3 overflow-hidden">
-                  <div className="text-sm font-medium truncate">{profile.name}</div>
-                  <div className="text-xs text-[var(--color-text-muted)] truncate">{profile.email}</div>
-                </div>
-                <ChevronDown size={16} className="ml-auto text-[var(--color-text-muted)]" />
-              </>
-            ) : (
-              <div className="flex items-center space-x-3 w-full animate-pulse">
-                <div className="w-10 h-10 bg-slate-200 rounded-full" />
-                <div className="flex-1 space-y-2">
-                  <div className="h-3 bg-slate-200 rounded w-3/4" />
-                  <div className="h-2 bg-slate-200 rounded w-1/2" />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}
@@ -142,13 +111,40 @@ export function AppShell() {
               <Bell size={20} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
             </button>
-            <div className="flex items-center cursor-pointer">
-              {profile ? (
-                <img src={profile.avatar} alt="Profile" className="w-8 h-8 rounded-full bg-slate-200" />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-slate-200 animate-pulse" />
-              )}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center cursor-pointer outline-none">
+                  {profile ? (
+                    <img src={profile.avatar} alt="Profile" className="w-8 h-8 rounded-full bg-slate-200" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-slate-200 animate-pulse" />
+                  )}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 mt-2">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="flex w-full items-center">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings" className="flex w-full items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="#" className="flex w-full items-center text-slate-500">
+                    <FileText className="mr-2 h-4 w-4" />
+                    <span>Terms & Conditions</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 

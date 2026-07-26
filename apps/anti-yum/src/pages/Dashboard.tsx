@@ -11,6 +11,7 @@ import {
   PieChart, Pie, Cell, AreaChart, Area 
 } from 'recharts';
 import { Shuffle } from '../components/ui/Shuffle';
+import { QuickActionButton } from '../components/ui/QuickActionButton';
 
 export function Dashboard() {
   const { data: stats, isLoading: statsLoading } = useDataFetch(getDashboardStats);
@@ -48,7 +49,7 @@ export function Dashboard() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Greeting Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex justify-between items-start">
         <div>
           <Shuffle
             text={`Good Morning, ${profile.name.split(' ')[0]}`}
@@ -67,8 +68,17 @@ export function Dashboard() {
         </div>
         <div className="flex items-center space-x-2 bg-white border border-[var(--color-border)] rounded-lg px-3 py-2 shadow-sm text-sm font-medium">
           <CalendarIcon size={16} className="text-[var(--color-text-muted)]" />
-          <span>May 24, 2025</span>
-          <ChevronDown size={16} className="text-[var(--color-text-muted)] ml-2" />
+          <span className="hidden sm:inline">May 24, 2025</span>
+          <ChevronDown size={16} className="text-[var(--color-text-muted)] sm:ml-2" />
+        </div>
+      </div>
+
+      <div className="flex flex-col items-end gap-2 mt-4 mb-2">
+        <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] opacity-80 mr-1">Quick Actions</span>
+        <div className="flex gap-3">
+          <QuickActionButton icon={ClipboardCheck} label="Assessment" iconColor="#3b82f6" />
+          <QuickActionButton icon={Activity} label="Log Vitals" iconColor="#22c55e" />
+          <QuickActionButton icon={AlertTriangle} label="Emergency" iconColor="#ef4444" />
         </div>
       </div>
 
@@ -223,7 +233,7 @@ export function Dashboard() {
       </div>
 
       {/* Bottom Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <Card>
           <div className="flex justify-between items-center mb-6">
             <div>
@@ -255,37 +265,6 @@ export function Dashboard() {
             </div>
           </div>
         </Card>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="flex flex-row items-center cursor-pointer hover:border-[var(--color-primary)] transition-colors p-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><ClipboardCheck size={20} /></div>
-            <div>
-              <div className="font-semibold text-sm">Start Assessment</div>
-              <div className="text-xs text-[var(--color-text-muted)]">Check your symptoms</div>
-            </div>
-          </Card>
-          <Card className="flex flex-row items-center cursor-pointer hover:border-[var(--color-primary)] transition-colors p-4">
-            <div className="w-10 h-10 rounded-lg bg-green-50 text-green-500 flex items-center justify-center mr-3 shrink-0"><Activity size={20} /></div>
-            <div>
-              <div className="font-semibold text-sm">Log Vitals</div>
-              <div className="text-xs text-[var(--color-text-muted)]">Record BP, Sugar and more</div>
-            </div>
-          </Card>
-          <Card className="flex flex-row items-center cursor-pointer hover:border-[var(--color-primary)] transition-colors p-4">
-            <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><FileText size={20} /></div>
-            <div>
-              <div className="font-semibold text-sm">Generate Report</div>
-              <div className="text-xs text-[var(--color-text-muted)]">Download your health report</div>
-            </div>
-          </Card>
-          <Card className="flex flex-row items-center cursor-pointer hover:border-red-500 transition-colors p-4 border-red-100">
-            <div className="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center mr-3 shrink-0"><AlertTriangle size={20} /></div>
-            <div>
-              <div className="font-semibold text-sm text-red-600">Emergency Help</div>
-              <div className="text-xs text-red-400">Get immediate medical help</div>
-            </div>
-          </Card>
-        </div>
       </div>
     </div>
   );
