@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  
+  --color-bg-app: var(--bg-app);
+  --color-bg-card: var(--bg-card);
+  --color-bg-sidebar: var(--bg-sidebar);
+  
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  
+  --color-border: var(--border-color);
+
+  --color-stat-blue: var(--stat-blue);
+  --color-stat-green: var(--stat-green);
+  --color-stat-purple: var(--stat-purple);
+  --color-stat-orange: var(--stat-orange);
+  
+  --color-stat-blue-bg: var(--stat-blue-bg);
+  --color-stat-green-bg: var(--stat-green-bg);
+  --color-stat-purple-bg: var(--stat-purple-bg);
+  --color-stat-orange-bg: var(--stat-orange-bg);
+
+  --color-status-good: var(--status-good);
+  --color-status-good-bg: var(--status-good-bg);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-bg: var(--status-warning-bg);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+:root {
+  --primary: #0EA5E9; /* Sky 500 */
+  --primary-hover: #0284C7; /* Sky 600 */
+  
+  --bg-app: #F8FAFC; /* Slate 50 */
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  
+  --text-main: #0F172A; /* Slate 900 */
+  --text-muted: #64748B; /* Slate 500 */
+  --text-inverse: #FFFFFF;
+  
+  --border-color: #E2E8F0; /* Slate 200 */
+
+  /* Stat accents */
+  --stat-blue: #3B82F6;
+  --stat-blue-bg: #EFF6FF;
+  
+  --stat-green: #10B981;
+  --stat-green-bg: #ECFDF5;
+  
+  --stat-purple: #8B5CF6;
+  --stat-purple-bg: #F5F3FF;
+  
+  --stat-orange: #F59E0B;
+  --stat-orange-bg: #FFFBEB;
+
+  /* Status pills */
+  --status-good: #059669;
+  --status-good-bg: #D1FAE5;
+  
+  --status-warning: #D97706;
+  --status-warning-bg: #FEF3C7;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Recharts custom styles */
+.recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  fill: var(--text-muted);
+}
