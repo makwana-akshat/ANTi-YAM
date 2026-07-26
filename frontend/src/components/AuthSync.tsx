@@ -4,33 +4,49 @@ import axios from 'axios';
 
 export const AuthSync = ({ children }: { children: React.ReactNode }) => {
   const { getToken, isLoaded: isAuthLoaded, isSignedIn } = useAuth();
-  const { isLoaded: isUserLoaded } = useUser();
+  const { user, isLoaded: isUserLoaded } = useUser();
 
   useEffect(() => {
     const syncUser = async () => {
-      // Ensure auth is loaded and user is signed in
-      if (!isAuthLoaded || !isUserLoaded || !isSignedIn) return;
+      if (!isAuthLoaded || !isUserLoaded || !isSignedIn || !user) return;
 
+      console.log("Starting sync...");
       try {
         const token = await getToken();
-        // Call the backend to sync the user to Supabase
-        await axios.post(
-          'http://localhost:8000/api/v1/auth/sync',
-          {},
+        console.log("JWT received");
+        
+        console.log("Sending request...");
+        const response = await axios.post(
+          'http://127.0.0.1:8000/api/v1/auth/sync',
+          {
+            email: user.primaryEmailAddress?.emailAddress,
+            full_name: user.fullName,
+            avatar_url: user.imageUrl,
+            phone_number: user.primaryPhoneNumber?.phoneNumber
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }
         );
-        console.log("User synced successfully with the backend");
-      } catch (error) {
-        console.error("Failed to sync user with backend:", error);
+        console.log("Response received");
+        console.log("Sync successful", response.data);
+      } catch (error: any) {
+        if (error.response) {
+          console.error("Failed to sync user with backend:", {
+            status: error.response.status,
+            body: error.response.data,
+            message: error.message
+          });
+        } else {
+          console.error("Failed to sync user with backend (Network/Setup Error):", error.message);
+        }
       }
     };
 
     syncUser();
-  }, [isAuthLoaded, isUserLoaded, isSignedIn, getToken]);
+  }, [isAuthLoaded, isUserLoaded, isSignedIn, getToken, user]);
 
   return <>{children}</>;
 };

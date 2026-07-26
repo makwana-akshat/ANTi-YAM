@@ -62,33 +62,35 @@ class AuthenticationService:
             logger.error(f"Unexpected error in verify_jwt: {e}")
             raise HTTPException(status_code=500, detail="Internal server error during authentication.")
 
-    def extract_claims(self, claims: Dict[str, Any]) -> Dict[str, Any]:
-        """Extracts standard user fields from Clerk's raw JWT claims."""
-        email = claims.get("email")
+    def extract_claims(self, claims: Dict[str, Any], body: Any = None) -> Dict[str, Any]:
+        """Extracts standard user fields from Clerk's raw JWT claims or the provided request body."""
+        clerk_id = claims.get("sub")
+        
+        email = body.email if body else claims.get("email")
         if not email and claims.get("email_addresses"):
             email = claims.get("email_addresses")[0]
             
-        full_name = claims.get("name")
-        if not full_name:
+        full_name = body.full_name if body else claims.get("name")
+        if not full_name and claims.get("given_name"):
             given = claims.get("given_name", "")
             family = claims.get("family_name", "")
             full_name = f"{given} {family}".strip()
             
         return {
-            "clerk_id": claims.get("sub"),
+            "clerk_id": clerk_id,
             "email": email,
             "full_name": full_name or None,
-            "avatar_url": claims.get("picture"),
-            "phone_number": claims.get("phone_number")
+            "avatar_url": body.avatar_url if body else claims.get("picture"),
+            "phone_number": body.phone_number if body else claims.get("phone_number")
         }
 
-    def sync_user(self, claims: Dict[str, Any]) -> SyncResponse:
+    def sync_user(self, claims: Dict[str, Any], body: Any = None) -> SyncResponse:
         """Synchronizes the JWT claims with the database (insert or update)."""
-        extracted = self.extract_claims(claims)
+        extracted = self.extract_claims(claims, body)
         clerk_id = extracted.get("clerk_id")
         
         if not clerk_id or not extracted.get("email"):
-            raise HTTPException(status_code=400, detail="JWT missing required 'sub' or 'email' claims.")
+            raise HTTPException(status_code=400, detail="Missing required 'clerk_id' or 'email'. Ensure frontend sends the email.")
             
         existing_user = self.user_repo.find_by_clerk_id(clerk_id)
         

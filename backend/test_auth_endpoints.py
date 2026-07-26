@@ -40,8 +40,15 @@ def test_sync_new_user(mock_auth_service_class):
     # We must patch the service instantiated in the route as well
     with patch("app.auth.routes.AuthenticationService") as route_mock_service_class:
         route_mock_service_class.return_value = mock_service
-        # Make the request with a dummy token
-        response = client.post("/api/v1/auth/sync", headers={"Authorization": "Bearer dummy_token"})
+        # Make the request with a dummy token and payload
+        response = client.post(
+            "/api/v1/auth/sync", 
+            headers={"Authorization": "Bearer dummy_token"},
+            json={
+                "email": "test@example.com",
+                "full_name": "Test User"
+            }
+        )
         assert response.status_code == 200
         data = response.json()
         assert data["data"]["clerk_id"] == "user_123"

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, status
-from app.auth.schemas import SyncResponse, LogoutResponse
+from app.auth.schemas import SyncResponse, LogoutResponse, SyncRequest
 from app.users.schemas import UserResponse, UserUpdateRequest
 from app.auth.services import AuthenticationService
 from app.schemas.base import SuccessResponse
@@ -7,11 +7,11 @@ from app.schemas.base import SuccessResponse
 router = APIRouter()
 
 @router.post("/sync", response_model=SuccessResponse[SyncResponse], summary="Synchronize Clerk user with database")
-async def sync_user(request: Request):
+async def sync_user(request: Request, body: SyncRequest):
     """Called by frontend after login/signup to ensure the user exists in our local database."""
     auth_service = AuthenticationService()
     # request.state.user is attached by the AuthenticationMiddleware
-    sync_result = auth_service.sync_user(request.state.user)
+    sync_result = auth_service.sync_user(request.state.user, body)
     return SuccessResponse(data=sync_result)
 
 @router.get("/me", response_model=SuccessResponse[UserResponse], summary="Get current authenticated user")
