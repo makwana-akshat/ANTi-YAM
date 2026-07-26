@@ -5,6 +5,7 @@ from .config.config import settings
 from .api.routes.api_router import api_router
 from .middleware.logging import RequestLoggingMiddleware
 from .middleware.errors import global_exception_handler
+from .middleware.auth import AuthenticationMiddleware
 
 app = FastAPI(
     title="SwasthAI API",
@@ -23,6 +24,7 @@ app.add_middleware(
 )
 
 # Middleware
+app.add_middleware(AuthenticationMiddleware)
 app.add_middleware(RequestLoggingMiddleware)
 app.add_exception_handler(Exception, global_exception_handler)
 

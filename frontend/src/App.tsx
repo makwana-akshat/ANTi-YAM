@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
+import { AuthSync } from './components/AuthSync';
 import { AppShell } from './components/AppShell';
 import { Dashboard } from './pages/Dashboard';
 import { AiCompanion } from './pages/AiCompanion';
@@ -15,7 +17,21 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/landing" element={<Landing />} />
-        <Route path="/" element={<AppShell />}>
+        <Route 
+          path="/" 
+          element={
+            <>
+              <SignedIn>
+                <AuthSync>
+                  <AppShell />
+                </AuthSync>
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="ai" element={<AiCompanion />} />
           <Route path="logs" element={<HealthLogs />} />
