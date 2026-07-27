@@ -1,10 +1,21 @@
 import { useEffect } from 'react';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import axios from 'axios';
+import { useDiseaseStore } from '../features/disease-management/store/useDiseaseStore';
 
 export const AuthSync = ({ children }: { children: React.ReactNode }) => {
   const { getToken, isLoaded: isAuthLoaded, isSignedIn } = useAuth();
   const { user, isLoaded: isUserLoaded } = useUser();
+  const { clerkUserId, setClerkUserId, clearStore } = useDiseaseStore();
+
+  useEffect(() => {
+    if (isUserLoaded && user) {
+      if (clerkUserId !== user.id) {
+        clearStore();
+        setClerkUserId(user.id);
+      }
+    }
+  }, [isUserLoaded, user, clerkUserId, clearStore, setClerkUserId]);
 
   useEffect(() => {
     const syncUser = async () => {

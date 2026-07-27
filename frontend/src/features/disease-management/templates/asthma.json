@@ -1,0 +1,62 @@
+{
+  "title": "Daily Asthma Log",
+  "sections": [
+    {
+      "title": "Respiratory Vitals",
+      "fields": [
+        {
+          "id": "peakFlow",
+          "label": "Peak Flow (L/min)",
+          "component": "number_input",
+          "icon": "Wind",
+          "placeholder": "e.g. 400"
+        },
+        {
+          "id": "inhalerPuffs",
+          "label": "Rescue Inhaler Puffs Today",
+          "component": "slider",
+          "icon": "Pill",
+          "min": 0,
+          "max": 10,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "title": "Symptoms & Triggers",
+      "fields": [
+        {
+          "id": "symptoms",
+          "label": "Symptoms Experienced",
+          "component": "multiselect",
+          "icon": "AlertCircle",
+          "options": [
+            { "label": "Wheezing", "value": "wheezing" },
+            { "label": "Shortness of Breath", "value": "sob" },
+            { "label": "Coughing", "value": "coughing" },
+            { "label": "Chest Tightness", "value": "tightness" }
+          ]
+        },
+        {
+          "id": "triggers",
+          "label": "Potential Triggers",
+          "component": "multiselect",
+          "icon": "Search",
+          "options": [
+            { "label": "Pollen/Allergies", "value": "pollen" },
+            { "label": "Exercise", "value": "exercise" },
+            { "label": "Cold Air", "value": "cold" },
+            { "label": "Stress", "value": "stress" },
+            { "label": "Dust", "value": "dust" }
+          ]
+        },
+        {
+          "id": "notes",
+          "label": "Additional Notes",
+          "component": "textarea",
+          "icon": "FileText"
+        }
+      ]
+    }
+  ]
+}

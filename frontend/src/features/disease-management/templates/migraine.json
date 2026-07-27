@@ -1,0 +1,43 @@
+{
+  "title": "Daily Migraine Log",
+  "sections": [
+    {
+      "title": "Symptoms",
+      "fields": [
+        {
+          "id": "painLevel",
+          "label": "Pain Level",
+          "component": "slider",
+          "min": 0,
+          "max": 10,
+          "required": true,
+          "icon": "Activity"
+        },
+        {
+          "id": "sleepHours",
+          "label": "Sleep Hours",
+          "component": "number_input",
+          "placeholder": "Hours",
+          "required": true,
+          "icon": "Moon"
+        },
+        {
+          "id": "medication",
+          "label": "Medication Taken",
+          "component": "switch",
+          "required": true,
+          "icon": "Pill"
+        },
+        {
+          "id": "stressLevel",
+          "label": "Stress Level",
+          "component": "slider",
+          "min": 1,
+          "max": 5,
+          "required": false,
+          "icon": "Brain"
+        }
+      ]
+    }
+  ]
+}

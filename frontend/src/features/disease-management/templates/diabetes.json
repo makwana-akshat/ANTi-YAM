@@ -1,0 +1,65 @@
+{
+  "title": "Daily Diabetes Log",
+  "sections": [
+    {
+      "title": "Today's Health",
+      "fields": [
+        {
+          "id": "bloodSugar",
+          "label": "Blood Sugar",
+          "component": "number_input",
+          "placeholder": "Enter blood sugar",
+          "unit": "mg/dL",
+          "required": true,
+          "icon": "Droplet"
+        },
+        {
+          "id": "medication",
+          "label": "Medication Taken",
+          "component": "switch",
+          "required": true,
+          "icon": "Pill"
+        },
+        {
+          "id": "exercise",
+          "label": "Exercise Duration",
+          "component": "number_input",
+          "placeholder": "Minutes",
+          "unit": "minutes",
+          "required": false,
+          "icon": "Activity"
+        },
+        {
+          "id": "water",
+          "label": "Water Intake",
+          "component": "number_input",
+          "placeholder": "Litres",
+          "unit": "L",
+          "required": false,
+          "icon": "GlassWater"
+        },
+        {
+          "id": "symptoms",
+          "label": "Symptoms",
+          "component": "multiselect",
+          "options": [
+            "Fatigue",
+            "Blurred Vision",
+            "Frequent Urination",
+            "Dizziness"
+          ],
+          "required": false,
+          "icon": "AlertCircle"
+        },
+        {
+          "id": "notes",
+          "label": "Additional Notes",
+          "component": "textarea",
+          "placeholder": "Write anything important...",
+          "required": false,
+          "icon": "FileText"
+        }
+      ]
+    }
+  ]
+}

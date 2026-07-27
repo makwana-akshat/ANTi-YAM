@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 @theme {
@@ -29,7 +30,7 @@
   --color-status-warning: var(--status-warning);
   --color-status-warning-bg: var(--status-warning-bg);
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
   
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -81,4 +82,24 @@ body {
 .recharts-cartesian-axis-tick-value {
   font-size: 12px;
   fill: var(--text-muted);
+}
+
+@media print {
+  aside, header, .no-print {
+    display: none !important;
+  }
+  
+  main {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  body {
+    background-color: white !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
